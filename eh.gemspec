@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ernstvangraan@gmail.com"]
   spec.description   = %q{Error handler gem that allows wrapping of code blocks with support for block retry, logging, exception filtering and re-raise}
   spec.summary       = %q{Error handler gem that allows wrapping of code blocks with support for block retry, logging, exception filtering and re-raise}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/evangraan/eh"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
