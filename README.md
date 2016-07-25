@@ -1,5 +1,7 @@
 # Eh
 
+[![Gem Version](https://badge.fury.io/rb/eh.png)](https://badge.fury.io/rb/eh)
+
 The Error handler gem provides the following major functional support for error handling,
 based on the ideas expressed in the Exceptional Ruby book by Avdi Grimm
 
