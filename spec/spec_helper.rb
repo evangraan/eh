@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 require 'rspec'
 
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
