@@ -29,40 +29,40 @@ module ErrorHandler
       if $!
         message = "Unhandled exception: #{$!}"
         warn message
-        if not logfile.nil?
+        unless logfile.nil?
           open(logfile, 'a') { |f|
             f.puts message
           }
         end
 
-        handle(handlers, $!, message) if not handlers.nil?
+        handle(handlers, $!, message) unless handlers.nil?
       end
     end
 
     def self.retry!(options, &block)
       opts = options || {}
-      EH::retry_with_raise(opts, block)
+      EH.retry_with_raise(opts, block)
 
     rescue => e
       raise e if opts.nil? == false and opts[:exception_filter] and not opts[:exception_filter].include? e.class
 
       msg = "#{opts[:message]}: #{e.message}"
-      EH::log(opts[:logger], msg, EH::log_level(opts)) if opts.nil? == false and not opts[:logger].nil? and not opts[:message].nil?
-      EH::handle(opts[:handlers], e, msg) if not opts[:handlers].nil?
+      EH.log(opts[:logger], msg, EH.log_level(opts)) if opts.nil? == false and not opts[:logger].nil? and not opts[:message].nil?
+      EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
       raise e
     end
 
     def self.retry(options, &block)
       opts = options || {}
       begin
-        EH::retry_with_raise(opts, block)
+        EH.retry_with_raise(opts, block)
         return true
       rescue => e
         msg = "#{opts[:message]}: #{e.message}"
         if not opts[:logger].nil?
-          EH::log(opts[:logger], msg, EH::log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
+          EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
         end
-        EH::handle(opts[:handlers], e, msg) if not opts[:handlers].nil?
+        EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
         return false
       end
     end
@@ -74,9 +74,9 @@ module ErrorHandler
     rescue => e
       msg = "#{opts[:message]}: #{e.message}"
       if not opts[:logger].nil?
-        EH::log(opts[:logger], msg, EH::log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
+        EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
       end
-      EH::handle(opts[:handlers], e, msg) if not opts[:handlers].nil?
+      EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
 
       raise e if opts.nil? == false and opts[:exception_filter] and not opts[:exception_filter].include? e.class
       raise e if opts.nil? == true or opts[:exception_filter].nil? == true or opts[:exception_filter] == []
@@ -89,16 +89,16 @@ module ErrorHandler
     rescue => e
       msg = "#{opts[:message]}: #{e.message}"
       if not opts[:logger].nil?
-        EH::log(opts[:logger], msg, EH::log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
+        EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
       end
-      EH::handle(opts[:handlers], e, msg) if not opts[:handlers].nil?
+      EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
     end
 
     def self.log(facilities, msg, msg_type)
       if facilities.is_a? Array
-        EH::log_multiple_loggers(facilities, msg, msg_type)
+        EH.log_multiple_loggers(facilities, msg, msg_type)
       else
-        EH::log_single_logger(facilities, msg, msg_type)
+        EH.log_single_logger(facilities, msg, msg_type)
       end
     end
 
@@ -110,7 +110,7 @@ module ErrorHandler
       return if handlers.nil?
       if handlers.is_a? Array
         handlers.each do |handler|
-          handler.handle(e, msg) if not handler.nil?
+          handler.handle(e, msg) unless handler.nil?
         end
       else
         handlers.handle(e, msg)

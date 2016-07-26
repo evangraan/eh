@@ -16,17 +16,17 @@ o Capability to handle unhandled exceptions, log them, email them and either rai
 
 The Error Handler gem allows the wrapping of arbitrary blocks of code in exception handling logic. Specifically, once an exception occurs:
 
-o The block can be retried 'threshold' times, with a delay of 'delay' seconds in-between retries (EH::retry and EH::retry!)
+o The block can be retried 'threshold' times, with a delay of 'delay' seconds in-between retries (EH.retry and EH.retry!)
 
 o The exception can be logged to a single logger, or an array of loggers
 
 o The exception can be re-raised (suppressed during retry, but logged, raised again after retry failure)
 
-o The same functionality is available, with retry disabled (EH::run and EH::run!)
+o The same functionality is available, with retry disabled (EH.run and EH.run!)
 
 o The list of Linux system exit codes is also provided as EH::EX_<exit>
 
-o Unhandled exceptions can be logged and emailed in main() using EH::report_unhandled()
+o Unhandled exceptions can be logged and emailed in main() using EH.report_unhandled()
 
 o A list of handlers can be injected to do custom handling, such as email, roll-back, etc.
 
@@ -56,7 +56,7 @@ Or install it yourself as:
    the list of handlers provided
 
     def load_configuration(configuration_path)
-        EH::retry!(:logger => [@simple_logger, @verbose_logger],
+        EH.retry!(:logger => [@simple_logger, @verbose_logger],
                   :message => "Could not parse YAML configuration",
                   :args => [configuration_path],
                   :threshold => 5,
@@ -70,7 +70,7 @@ Or install it yourself as:
 -- Run code block with retry only on the exceptions listed, with the default threshold and delay
 
     def load_configuration(configuration_path, logger = nil)
-        EH::retry!(:args => [configuration_path], :exceptions => [IOError, RuntimeError]) do
+        EH.retry!(:args => [configuration_path], :exceptions => [IOError, RuntimeError]) do
             YAML.load(File.open(configuration_path))
         end
     end
@@ -78,7 +78,7 @@ Or install it yourself as:
 -- Run code block without retry, and swallowing all exceptions
 
     def load_configuration(configuration_path, logger = nil)
-        EH::run(:args => [configuration_path]) do
+        EH.run(:args => [configuration_path]) do
             YAML.load(File.open(configuration_path))
         end
     end
@@ -117,7 +117,7 @@ All exceptions are passed to all handlers, regardless of exception filter. It is
 Unhandled exceptions can be logged and emailed as follows:
 
     at_exit do
-        EH::report_unhandled(logfile = "/var/log/myapp/crash.log", email = "ernstvangraan@gmail.com")
+        EH.report_unhandled(logfile = "/var/log/myapp/crash.log", email = "ernstvangraan@gmail.com")
         exit EH::EX_CONFIG
     end
 
