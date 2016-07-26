@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/eh.png)](https://badge.fury.io/rb/eh)
 [![Build Status](https://travis-ci.org/evangraan/eh.svg?branch=master)](https://travis-ci.org/evangraan/eh)
 [![Coverage Status](https://coveralls.io/repos/github/evangraan/eh/badge.svg?branch=master)](https://coveralls.io/github/evangraan/eh?branch=master)
-<codacy>
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/116235b8af4541af97bf3476cd9ea389)](https://www.codacy.com/app/ernst-van-graan/eh?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evangraan/eh&amp;utm_campaign=Badge_Grade)
 
 The Error handler gem provides the following major functional support for error handling,
 based on the ideas expressed in the Exceptional Ruby book by Avdi Grimm
