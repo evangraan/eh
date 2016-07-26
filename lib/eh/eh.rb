@@ -48,7 +48,7 @@ module ErrorHandler
 
       msg = "#{opts[:message]}: #{e.message}"
       EH.log(opts[:logger], msg, EH.log_level(opts)) if opts.nil? == false and not opts[:logger].nil? and not opts[:message].nil?
-      EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
+      EH.handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
       raise e
     end
 
@@ -59,7 +59,7 @@ module ErrorHandler
         return true
       rescue => e
         msg = "#{opts[:message]}: #{e.message}"
-        if not opts[:logger].nil?
+        unless opts[:logger].nil?
           EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
         end
         EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
