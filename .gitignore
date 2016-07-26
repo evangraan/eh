@@ -17,3 +17,4 @@ test/tmp
 test/version_tmp
 tmp
 spec/test_spec.rb
+.byebug_history

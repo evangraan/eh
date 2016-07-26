@@ -2,6 +2,7 @@ require "spec_helper"
 require "eh/eh"
 require "mock_logger"
 require "mock_mailer"
+require 'tempfile'
 
 describe ErrorHandler do
   before :each do
@@ -499,6 +500,36 @@ describe ErrorHandler do
       expect(EH).not_to receive(:warn)
 
       EH.log([nil, @logger], "fatal", EH::FATAL)
+    end
+  end
+
+  context "when asked to report unhandled exceptions" do
+    it "should write to a logfile provided" do
+      temp = Tempfile.new('ehlogtest')
+      temppath = temp.path
+      begin
+        raise RuntimeError
+      rescue => ex
+        EH.report_unhandled(temppath, nil) do
+          raise RuntimeError
+        end
+        result = `cat #{temppath}`.gsub("\n", "")
+        expect(result).to eq("Unhandled exception: RuntimeError")
+        `rm #{temppath}`
+      end
+    end    
+
+    it "should ask handlers to handle if handlers were provided" do
+      begin
+        raise RuntimeError
+      rescue => ex
+        EH.report_unhandled(nil, [@mailer]) do
+          raise RuntimeError
+        end
+      end
+
+      expect(@mailer.e.class).to eq(RuntimeError)
+      expect(@mailer.msg).to eq("Unhandled exception: RuntimeError")
     end
   end
 end

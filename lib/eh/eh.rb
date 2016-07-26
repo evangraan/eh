@@ -34,7 +34,6 @@ module ErrorHandler
             f.puts message
           }
         end
-
         handle(handlers, $!, message) unless handlers.nil?
       end
     end
@@ -100,10 +99,6 @@ module ErrorHandler
       else
         EH.log_single_logger(facilities, msg, msg_type)
       end
-    end
-
-    def self.generate_log_id
-      Time.now
     end
 
     def self.handle(handlers, e, msg)
