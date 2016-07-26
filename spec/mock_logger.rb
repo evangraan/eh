@@ -1,16 +1,16 @@
 class MockLogger
-  def error(message)
+  def error(_message)
   end
 
-  def info(message)
+  def info(_message)
   end
 
-  def debug(message)
+  def debug(_message)
   end
 
-  def warn(message)
+  def warn(_message)
   end
 
-  def fatal(message)
+  def fatal(_message)
   end
 end

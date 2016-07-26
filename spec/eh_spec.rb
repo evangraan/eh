@@ -30,7 +30,6 @@ describe ErrorHandler do
             count += 1
             raise RuntimeError
           end
-        rescue => e
         end
         expect(count).to eq(1)
       end

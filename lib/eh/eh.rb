@@ -103,10 +103,8 @@ module ErrorHandler
     end
 
     def self.generate_log_id
-      ms = Time.now
+      Time.now
     end
-
-    private
 
     def self.handle(handlers, e, msg)
       return if handlers.nil?
