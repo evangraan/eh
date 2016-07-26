@@ -1,6 +1,9 @@
 # Eh
 
 [![Gem Version](https://badge.fury.io/rb/eh.png)](https://badge.fury.io/rb/eh)
+[![Build Status](https://travis-ci.org/evangraan/eh.svg?branch=master)](https://travis-ci.org/evangraan/eh)
+[![Coverage Status](https://coveralls.io/repos/github/evangraan/eh/badge.svg?branch=master)](https://coveralls.io/github/evangraan/eh?branch=master)
+<codacy>
 
 The Error handler gem provides the following major functional support for error handling,
 based on the ideas expressed in the Exceptional Ruby book by Avdi Grimm
