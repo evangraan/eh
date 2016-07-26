@@ -62,21 +62,21 @@ module ErrorHandler
         unless opts[:logger].nil?
           EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
         end
-        EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
+        EH.handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
         return false
       end
     end
 
     def self.run!(options, &block)
       opts = options || {}
-      block.call(EH::construct_args(opts))
+      block.call(EH.construct_args(opts))
 
     rescue => e
       msg = "#{opts[:message]}: #{e.message}"
       if not opts[:logger].nil?
         EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
       end
-      EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
+      EH.handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
 
       raise e if opts.nil? == false and opts[:exception_filter] and not opts[:exception_filter].include? e.class
       raise e if opts.nil? == true or opts[:exception_filter].nil? == true or opts[:exception_filter] == []
@@ -84,14 +84,14 @@ module ErrorHandler
 
     def self.run(options, &block)
       opts = options || {}
-      block.call(EH::construct_args(opts))
+      block.call(EH.construct_args(opts))
 
     rescue => e
       msg = "#{opts[:message]}: #{e.message}"
       if not opts[:logger].nil?
         EH.log(opts[:logger], msg, EH.log_level(opts)) if opts[:exception_filter].nil? or opts[:exception_filter].include? e.class
       end
-      EH::handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
+      EH.handle(opts[:handlers], e, msg) unless opts[:handlers].nil?
     end
 
     def self.log(facilities, msg, msg_type)
@@ -128,7 +128,7 @@ module ErrorHandler
       delay = opts[:delay] || 0.2
       attempts = 0
       begin
-        block.call(EH::construct_args(opts))
+        block.call(EH.construct_args(opts))
       rescue => e
         raise e if opts[:exception_filter] and not opts[:exception_filter].include? e.class
 
